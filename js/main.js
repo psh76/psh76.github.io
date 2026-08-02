@@ -76,6 +76,20 @@ document.addEventListener('DOMContentLoaded', () => {
       const modalId = trigger.getAttribute('data-modal');
       const targetModal = document.getElementById(modalId);
       if (targetModal) {
+        if (modalId === 'quizModal') {
+          // Triggered directly via Header or Hero button
+          targetModal.setAttribute('data-from-quiz', 'false');
+        } else if (modalId === 'consultModal') {
+          const projectCard = trigger.closest('.project-card');
+          if (projectCard) {
+            const title = projectCard.querySelector('.project-title')?.textContent?.trim() || '';
+            targetModal.setAttribute('data-project-name', title);
+            const modalTitleEl = document.getElementById('consultModalTitle');
+            if (modalTitleEl) {
+              modalTitleEl.textContent = title ? `Узнать больше о проекте "${title}"` : 'Узнать больше о проекте';
+            }
+          }
+        }
         targetModal.classList.add('active');
         document.body.style.overflow = 'hidden';
       }
@@ -112,6 +126,25 @@ document.addEventListener('DOMContentLoaded', () => {
     area: '150-200',
     type: 'box',
     material: 'gasblock'
+  };
+
+  const quizLabelMap = {
+    area: {
+      'up-100': 'до 100 м²',
+      '100-150': '100–150 м²',
+      '150-200': '150–200 м²',
+      '200-plus': 'от 200 м²'
+    },
+    type: {
+      'box': 'Под усадку / Коробка',
+      'warm': 'Теплый контур',
+      'turnkey': 'Под ключ'
+    },
+    material: {
+      'gasblock': 'Газобетон',
+      'brick': 'Кирпич / Керамоблок',
+      'wood': 'Профилированный брус / Каркас'
+    }
   };
 
   // Option selection handling
@@ -157,9 +190,10 @@ document.addEventListener('DOMContentLoaded', () => {
         currentStep++;
         updateQuizUI();
       } else {
-        // Open Quiz Lead Submission Modal
+        // Open Quiz Lead Submission Modal (marked as submitted from quiz flow)
         const quizModal = document.getElementById('quizModal');
         if (quizModal) {
+          quizModal.setAttribute('data-from-quiz', 'true');
           quizModal.classList.add('active');
           document.body.style.overflow = 'hidden';
         }
@@ -186,32 +220,102 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 7. Contact & Lead Form Submission Handlers
+  // Parse URL GET parameters for tracking
+  const urlParams = new URLSearchParams(window.location.search);
+  const trackingParams = {
+    partner: urlParams.get('partner') || 'direct',
+    direction: urlParams.get('direction') || 'unknown',
+    source: urlParams.get('source') || 'website'
+  };
+
+  // 7. Contact & Lead Form Submission Handlers (Web3Forms API Integration)
   const leadForms = document.querySelectorAll('.lead-form');
+  const WEB3FORMS_ACCESS_KEY = "4946df71-ee36-487a-ac81-6b07b05fd0fc";
+
   leadForms.forEach(form => {
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      
+
       const submitBtn = form.querySelector('button[type="submit"]');
       const originalText = submitBtn.textContent;
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Отправка...';
 
-      setTimeout(() => {
-        submitBtn.disabled = false;
-        submitBtn.textContent = originalText;
-        form.reset();
+      const formData = new FormData(form);
+      formData.append("access_key", WEB3FORMS_ACCESS_KEY);
 
-        // Close any active modal
-        modalOverlays.forEach(modal => modal.classList.remove('active'));
+      // Append background tracking parameters
+      formData.append("partner", trackingParams.partner);
+      formData.append("direction", trackingParams.direction);
+      formData.append("source", trackingParams.source);
 
-        // Show Success Toast Modal
-        const successModal = document.getElementById('successModal');
-        if (successModal) {
-          successModal.classList.add('active');
-          document.body.style.overflow = 'hidden';
+      // Append preferred messenger if present in active toggle (using Latin key to avoid email encoding corruption)
+      const activeMessenger = form.querySelector('.radio-toggle.active');
+      if (activeMessenger) {
+        const messengerName = activeMessenger.getAttribute('data-type') || activeMessenger.textContent.trim();
+        formData.append("Messenger", messengerName);
+      }
+
+      const formType = form.getAttribute('data-form-type');
+
+      if (formType === 'quiz') {
+        const quizModal = form.closest('#quizModal');
+        const isFromQuiz = quizModal ? quizModal.getAttribute('data-from-quiz') === 'true' : false;
+
+        if (isFromQuiz) {
+          formData.append("subject", "Zayavka na raschet stoimosti (Quiz) - PSH76");
+          formData.append("Quiz_Area", quizLabelMap.area[quizState.area] || quizState.area);
+          formData.append("Quiz_Package", quizLabelMap.type[quizState.type] || quizState.type);
+          formData.append("Quiz_Material", quizLabelMap.material[quizState.material] || quizState.material);
+        } else {
+          formData.append("subject", "Zayavka s saita - PSH76");
         }
-      }, 800);
+      } else if (formType === 'project') {
+        const modal = form.closest('#consultModal');
+        const projectName = modal ? modal.getAttribute('data-project-name') : '';
+        if (projectName) {
+          formData.append("subject", `Zayavka po proektu "${projectName}" - PSH76`);
+          formData.append("Project", projectName);
+        } else {
+          formData.append("subject", "Zayavka po proektu - PSH76");
+        }
+      } else {
+        formData.append("subject", "Zayavka na konsultatsiyu - PSH76");
+      }
+
+      submitBtn.textContent = "Отправка...";
+      submitBtn.disabled = true;
+
+      try {
+        const response = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          body: formData
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          form.reset();
+
+          // Close any active modal
+          modalOverlays.forEach(modal => modal.classList.remove('active'));
+
+          // Show Success Modal
+          const successModal = document.getElementById('successModal');
+          if (successModal) {
+            successModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+          } else {
+            alert("Спасибо! Ваша заявка успешно отправлена.");
+          }
+        } else {
+          alert("Ошибка при отправке: " + (data.message || "Попробуйте позже."));
+        }
+      } catch (error) {
+        console.error("Web3Forms submission error:", error);
+        alert("Произошла ошибка при отправке заявки. Проверьте подключение к интернету и попробуйте снова.");
+      } finally {
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+      }
     });
   });
 

@@ -62,8 +62,7 @@
     <div class="container">
       <div class="hero-content">
         <span class="hero-badge">ПСХ</span>
-        <h1 class="hero-title">Каменные дома и коробки
-Монолит любой сложности</h1>
+        <h1 class="hero-title">Строительство коробки дома под ключ</h1>
         <p class="hero-description">Инженерный подход к каждому проекту</p>
         <div class="hero-buttons">
           <a href="#quiz" class="btn btn-primary">Рассчитать стоимость</a>
@@ -585,22 +584,22 @@
           <h3 style="margin-bottom: 1rem;">Получить бесплатную консультацию</h3>
           <p style="font-size: 0.9rem; color: var(--color-gray-600); margin-bottom: 1.5rem;">Оставьте номер телефона, и наш главный инженер свяжется с вами в течение 15 минут</p>
 
-          <form class="lead-form">
+          <form class="lead-form" data-form-type="consultation">
             <div class="form-group">
-              <input type="text" class="form-input" placeholder="Ваше Имя" required>
+              <input type="text" name="Name" class="form-input" placeholder="Ваше Имя" required>
             </div>
 
             <div class="form-group">
-              <input type="tel" class="form-input" placeholder="+7 (700) 000-00-00" required>
+              <input type="tel" name="Phone" class="form-input" placeholder="+7 (700) 000-00-00" required>
             </div>
 
             <div class="radio-toggle-group">
-              <div class="radio-toggle active" data-type="whatsapp">💬 WhatsApp</div>
-              <div class="radio-toggle" data-type="telegram">✈️ Telegram</div>
+              <div class="radio-toggle active" data-type="WhatsApp">💬 WhatsApp</div>
+              <div class="radio-toggle" data-type="Telegram">✈️ Telegram</div>
             </div>
 
             <label class="checkbox-label">
-              <input type="checkbox" required checked>
+              <input type="checkbox" name="privacy" required checked>
               <span>Согласен на обработку персональных данных</span>
             </label>
 
@@ -622,24 +621,24 @@
   <div class="modal-overlay" id="quizModal">
     <div class="modal-content">
       <button class="modal-close" aria-label="Закрыть">✕</button>
-      <h3 style="margin-bottom: 0.5rem;">Заявка на расчет стоимости</h3>
-      <p style="font-size: 0.9rem; color: var(--color-gray-600); margin-bottom: 1.5rem;">Введите ваши данные, чтобы получить смету по выбранным параметрам в WhatsApp или Telegram.</p>
+      <h3 style="margin-bottom: 0.5rem;" id="quizModalTitle">Заявка на расчет стоимости</h3>
+      <p style="font-size: 0.9rem; color: var(--color-gray-600); margin-bottom: 1.5rem;" id="quizModalSub">Введите ваши данные, чтобы получить смету в WhatsApp или Telegram.</p>
 
-      <form class="lead-form">
+      <form class="lead-form" data-form-type="quiz">
         <div class="form-group">
-          <input type="text" class="form-input" placeholder="Ваше Имя" required>
+          <input type="text" name="Name" class="form-input" placeholder="Ваше Имя" required>
         </div>
 
         <div class="form-group">
-          <input type="tel" class="form-input" placeholder="+7 (700) 000-00-00" required>
+          <input type="tel" name="Phone" class="form-input" placeholder="+7 (700) 000-00-00" required>
         </div>
 
         <div class="radio-toggle-group">
-          <div class="radio-toggle active">💬 WhatsApp</div>
-          <div class="radio-toggle">✈️ Telegram</div>
+          <div class="radio-toggle active" data-type="WhatsApp">💬 WhatsApp</div>
+          <div class="radio-toggle" data-type="Telegram">✈️ Telegram</div>
         </div>
 
-        <button type="submit" class="btn btn-primary" style="width: 100%;">Получить смету</button>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Отправить заявку</button>
       </form>
     </div>
   </div>
@@ -648,16 +647,21 @@
   <div class="modal-overlay" id="consultModal">
     <div class="modal-content">
       <button class="modal-close" aria-label="Закрыть">✕</button>
-      <h3 style="margin-bottom: 0.5rem;">Узнать больше о проекте</h3>
+      <h3 style="margin-bottom: 0.5rem;" id="consultModalTitle">Узнать больше о проекте</h3>
       <p style="font-size: 0.9rem; color: var(--color-gray-600); margin-bottom: 1.5rem;">Мы вышлем планировку, техническое описание и смету данного проекта.</p>
 
-      <form class="lead-form">
+      <form class="lead-form" data-form-type="project">
         <div class="form-group">
-          <input type="text" class="form-input" placeholder="Ваше Имя" required>
+          <input type="text" name="Name" class="form-input" placeholder="Ваше Имя" required>
         </div>
 
         <div class="form-group">
-          <input type="tel" class="form-input" placeholder="+7 (700) 000-00-00" required>
+          <input type="tel" name="Phone" class="form-input" placeholder="+7 (700) 000-00-00" required>
+        </div>
+
+        <div class="radio-toggle-group">
+          <div class="radio-toggle active" data-type="WhatsApp">💬 WhatsApp</div>
+          <div class="radio-toggle" data-type="Telegram">✈️ Telegram</div>
         </div>
 
         <button type="submit" class="btn btn-primary" style="width: 100%;">Получить материалы</button>
