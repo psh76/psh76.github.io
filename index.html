@@ -25,7 +25,7 @@
   <header class="header">
     <div class="container header-container">
       <a href="#" class="logo">
-        <span class="logo-badge">QF</span> ПСХ
+        <img src="assets/logo.png" alt="ПСХ" height="110" width="110">
       </a>
 
       <nav class="nav-menu">
@@ -62,15 +62,60 @@
     <div class="container">
       <div class="hero-content">
         <span class="hero-badge">ПСХ</span>
-        <h1 class="hero-title">Строительство коробки дома под ключ</h1>
-        <p class="hero-description">Инженерный подход к каждому проекту</p>
+        <h1 class="hero-title">Строительство домов по ключ
+          в Ярославской области
+        </h1>
+        <p class="hero-description">Коробка дома, теплый контур 
+          или дом под ключ</p>
         <div class="hero-buttons">
           <a href="#quiz" class="btn btn-primary">Рассчитать стоимость</a>
           <a href="#projects" class="btn btn-secondary">Смотреть проекты</a>
         </div>
       </div>
     </div>
-    <a href="#services" class="hero-arrow" aria-label="Прокрутить вниз">↓</a>
+    <a href="#promo" class="hero-arrow" aria-label="Прокрутить вниз">↓</a>
+  </section>
+
+  <!-- Promo Offer Section -->
+  <section class="promo-section" id="promo">
+    <div class="container">
+      <div class="promo-card">
+        <div class="promo-header">
+          <span class="promo-badge">🎁 Акция месяца</span>
+          <h2 class="promo-title">Заключите договор до конца месяца и получите один из трех подарков на выбор</h2>
+        </div>
+
+        <div class="promo-grid">
+          <!-- Gift 1 -->
+          <div class="promo-item">
+            <div class="promo-number">01</div>
+            <div class="promo-icon">📐</div>
+            <h3 class="promo-item-title">Индивидуальный проект дома</h3>
+            <p class="promo-item-text">Инженер разработает проект с учетом ваших пожеланий, состава семьи и особенностей участка.</p>
+          </div>
+
+          <!-- Gift 2 -->
+          <div class="promo-item">
+            <div class="promo-number">02</div>
+            <div class="promo-icon">🚪</div>
+            <h3 class="promo-item-title">Входная дверь с терморазрывом</h3>
+            <p class="promo-item-text">Надежная металлическая дверь для загородного дома с гарантированной защитой от промерзания.</p>
+          </div>
+
+          <!-- Gift 3 -->
+          <div class="promo-item">
+            <div class="promo-number">03</div>
+            <div class="promo-icon">💧</div>
+            <h3 class="promo-item-title">Септик под ключ</h3>
+            <p class="promo-item-text">Современная система автономной канализации для комфортного проживания семьи до 4 человек.</p>
+          </div>
+        </div>
+
+        <div class="promo-action">
+          <button class="btn btn-primary" data-modal="quizModal">Получить подарок</button>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- Services Section -->
@@ -130,15 +175,19 @@
             <h3 class="pricing-title">1. Коробка дома «под ключ» — только работа</h3>
             <p class="pricing-descr">Фундамент, стены, перегородки, перекрытия и кровля по проекту. Без окон, инженерии и отделки.</p>
           </div>
-          <div class="pricing-price">от 5800 до 11 500 ₽ / м²</div>
+          <div class="pricing-price">от 25 000 ₽ / м² из блоков<br>
+            от 32 000 ₽ / м² из кирпича
+          </div>
         </div>
 
         <div class="pricing-card">
           <div class="pricing-header">
             <h3 class="pricing-title">2. Коробка дома под крышу — материалы + работа</h3>
-            <p class="pricing-descr">Полная комплектация коробки дома: фундамент, качественные материалы, стены, перегородки, перекрытия и кровля.</p>
+            <p class="pricing-descr">Полная комплектация коробки дома: фундамент, качественные материалы, стены, перегородки, перекрытия и кровля.
+              <br> Окончательная стоимость зависит от проекта, типа фундамента и сложности кровли.
+            </p>
           </div>
-          <div class="pricing-price">от 21 400 до 37 800 ₽ / м²</div>
+          <div class="pricing-price">от 45 500  ₽ / м²</div>
         </div>
       </div>
     </div>
@@ -162,174 +211,153 @@
         <button class="filter-btn" data-filter="grand">Серия Гранд-Формат</button>
       </div>
 
-      <div class="projects-grid">
-        <!-- Project 1 -->
-        <div class="project-card" data-category="1story kompakt">
-          <div class="project-img-wrapper">
-            <span class="project-badge">1 Этаж</span>
-            <img src="assets/kompakt60.jpg" alt="Компакт - 60">
-          </div>
-          <div class="project-content">
-            <h3 class="project-title">Компакт - 60</h3>
-            <p style="font-size: 0.88rem; color: var(--color-gray-600); margin-bottom: 1rem;">Компактный одноэтажный дом подойдёт небольшой семье с ребёнком.</p>
-            <div class="project-specs">
-              <span class="project-spec-item">📏 60 м²</span>
-              <span class="project-spec-item">🛏 2 Спальни</span>
-              <span class="project-spec-item">🛁 1 С/У</span>
+      <!-- Carousel Wrapper -->
+      <div class="projects-carousel-container">
+        <button class="carousel-nav-btn prev" id="projectsPrevBtn" aria-label="Предыдущий проект">‹</button>
+        
+        <div class="projects-grid" id="projectsGrid">
+          <!-- Project 1 -->
+          <div class="project-card" data-category="1story kompakt">
+            <div class="project-img-wrapper">
+              <span class="project-badge">1 Этаж</span>
+              <img src="assets/kompakt60.jpg" alt="Компакт - 60">
             </div>
-            <div class="project-footer">
-              <div>
-                <span class="project-price-label">Рассчитать стоимость</span>
-                <div class="project-price-val">от 1 560 000 ₽</div>
+            <div class="project-content">
+              <h3 class="project-title">Компакт - 60</h3>
+              <p style="font-size: 0.88rem; color: var(--color-gray-600); margin-bottom: 1rem;">Компактный одноэтажный дом подойдёт небольшой семье с ребёнком.</p>
+              <div class="project-specs">
+                <span class="project-spec-item">📏 60 м²</span>
+                <span class="project-spec-item">🛏 2 Спальни</span>
+                <span class="project-spec-item">🛁 1 С/У</span>
               </div>
-              <button class="btn btn-outline-gold" data-modal="consultModal">Подробнее</button>
+              <div class="project-footer">
+                <button class="btn btn-outline-gold" data-modal="consultModal">Рассчитать стоимость</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 2 -->
+          <div class="project-card" data-category="1story kompakt">
+            <div class="project-img-wrapper">
+              <span class="project-badge">1 Этаж</span>
+              <img src="assets/komfort80.jpg" alt="Комфорт - 80">
+            </div>
+            <div class="project-content">
+              <h3 class="project-title">Комфорт - 80</h3>
+              <p style="font-size: 0.88rem; color: var(--color-gray-600); margin-bottom: 1rem;">Одноэтажный дом с панорамными окнами и гардеробной. Идеально для тех, кто ценит порядок.</p>
+              <div class="project-specs">
+                <span class="project-spec-item">📏 80 м²</span>
+                <span class="project-spec-item">🛏 2 Спальни</span>
+                <span class="project-spec-item">🛁 2 С/У</span>
+              </div>
+              <div class="project-footer">
+                <button class="btn btn-outline-gold" data-modal="consultModal">Рассчитать стоимость</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 3 -->
+          <div class="project-card" data-category="1story kompakt">
+            <div class="project-img-wrapper">
+              <span class="project-badge">1 Этаж</span>
+              <img src="assets/kompakt100.jpg" alt="Компакт - 100">
+            </div>
+            <div class="project-content">
+              <h3 class="project-title">Компакт - 100</h3>
+              <p style="font-size: 0.88rem; color: var(--color-gray-600); margin-bottom: 1rem;">Уютный одноэтажный дом площадью 100 м² — выбор тех, кто ценит комфорт и функциональность.</p>
+              <div class="project-specs">
+                <span class="project-spec-item">📏 100 м²</span>
+                <span class="project-spec-item">🛏 3 Спальни</span>
+                <span class="project-spec-item">🛁 2 С/У</span>
+              </div>
+              <div class="project-footer">
+                <button class="btn btn-outline-gold" data-modal="consultModal">Рассчитать стоимость</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 4 -->
+          <div class="project-card" data-category="2story kompakt">
+            <div class="project-img-wrapper">
+              <span class="project-badge">2 Этажа</span>
+              <img src="assets/kompakt120.jpg" alt="Компакт - 120">
+            </div>
+            <div class="project-content">
+              <h3 class="project-title">Компакт - 120</h3>
+              <p style="font-size: 0.88rem; color: var(--color-gray-600); margin-bottom: 1rem;">Двухэтажный дом 120 м² — отличное решение для молодой и активной семьи.</p>
+              <div class="project-specs">
+                <span class="project-spec-item">📏 120 м²</span>
+                <span class="project-spec-item">🛏 3 Спальни</span>
+                <span class="project-spec-item">🛁 2 С/У</span>
+              </div>
+              <div class="project-footer">
+                <button class="btn btn-outline-gold" data-modal="consultModal">Рассчитать стоимость</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 5 -->
+          <div class="project-card" data-category="2story grand">
+            <div class="project-img-wrapper">
+              <span class="project-badge">2 Этажа</span>
+              <img src="assets/grand160.jpg" alt="Гранд-Формат - 160">
+            </div>
+            <div class="project-content">
+              <h3 class="project-title">Гранд-Формат - 160</h3>
+              <p style="font-size: 0.88rem; color: var(--color-gray-600); margin-bottom: 1rem;">Просторный двухэтажный дом создан для тех, кто любит принимать гостей.</p>
+              <div class="project-specs">
+                <span class="project-spec-item">📏 160 м²</span>
+                <span class="project-spec-item">🛏 4 Спальни</span>
+                <span class="project-spec-item">🛁 3 С/У</span>
+              </div>
+              <div class="project-footer">
+                <button class="btn btn-outline-gold" data-modal="consultModal">Рассчитать стоимость</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 6 -->
+          <div class="project-card" data-category="1story grand">
+            <div class="project-img-wrapper">
+              <span class="project-badge">1 Этаж</span>
+              <img src="assets/grand200.jpg" alt="Гранд-Формат - 200">
+            </div>
+            <div class="project-content">
+              <h3 class="project-title">Гранд-Формат - 200</h3>
+              <p style="font-size: 0.88rem; color: var(--color-gray-600); margin-bottom: 1rem;">Стильный одноэтажный дом 200 м² в современном стиле — премиальное решение.</p>
+              <div class="project-specs">
+                <span class="project-spec-item">📏 200 м²</span>
+                <span class="project-spec-item">🛏 4 Спальни</span>
+                <span class="project-spec-item">🛁 3 С/У</span>
+              </div>
+              <div class="project-footer">
+                <button class="btn btn-outline-gold" data-modal="consultModal">Рассчитать стоимость</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 7 -->
+          <div class="project-card" data-category="2story grand">
+            <div class="project-img-wrapper">
+              <span class="project-badge">2 Этажа</span>
+              <img src="assets/grand220.jpg" alt="Гранд-Формат - 220">
+            </div>
+            <div class="project-content">
+              <h3 class="project-title">Гранд-Формат - 220</h3>
+              <p style="font-size: 0.88rem; color: var(--color-gray-600); margin-bottom: 1rem;">Практичный двухэтажный дом 220 м² сочетает простор и рациональную планировку.</p>
+              <div class="project-specs">
+                <span class="project-spec-item">📏 220 м²</span>
+                <span class="project-spec-item">🛏 5 Спален</span>
+                <span class="project-spec-item">🛁 3 С/У</span>
+              </div>
+              <div class="project-footer">
+                <button class="btn btn-outline-gold" data-modal="consultModal">Рассчитать стоимость</button>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- Project 2 -->
-        <div class="project-card" data-category="1story kompakt">
-          <div class="project-img-wrapper">
-            <span class="project-badge">1 Этаж</span>
-            <img src="assets/komfort80.jpg" alt="Комфорт - 80">
-          </div>
-          <div class="project-content">
-            <h3 class="project-title">Комфорт - 80</h3>
-            <p style="font-size: 0.88rem; color: var(--color-gray-600); margin-bottom: 1rem;">Одноэтажный дом с панорамными окнами и гардеробной. Идеально для тех, кто ценит порядок.</p>
-            <div class="project-specs">
-              <span class="project-spec-item">📏 80 м²</span>
-              <span class="project-spec-item">🛏 2 Спальни</span>
-              <span class="project-spec-item">🛁 2 С/У</span>
-            </div>
-            <div class="project-footer">
-              <div>
-                <span class="project-price-label">Рассчитать стоимость</span>
-                <div class="project-price-val">от 2 100 000 ₽</div>
-              </div>
-              <button class="btn btn-outline-gold" data-modal="consultModal">Подробнее</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Project 3 -->
-        <div class="project-card" data-category="1story kompakt">
-          <div class="project-img-wrapper">
-            <span class="project-badge">1 Этаж</span>
-            <img src="assets/kompakt100.jpg" alt="Компакт - 100">
-          </div>
-          <div class="project-content">
-            <h3 class="project-title">Компакт - 100</h3>
-            <p style="font-size: 0.88rem; color: var(--color-gray-600); margin-bottom: 1rem;">Уютный одноэтажный дом площадью 100 м² — выбор тех, кто ценит комфорт и функциональность.</p>
-            <div class="project-specs">
-              <span class="project-spec-item">📏 100 м²</span>
-              <span class="project-spec-item">🛏 3 Спальни</span>
-              <span class="project-spec-item">🛁 2 С/У</span>
-            </div>
-            <div class="project-footer">
-              <div>
-                <span class="project-price-label">Рассчитать стоимость</span>
-                <div class="project-price-val">от 2 550 000 ₽</div>
-              </div>
-              <button class="btn btn-outline-gold" data-modal="consultModal">Подробнее</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Project 4 -->
-        <div class="project-card" data-category="2story kompakt">
-          <div class="project-img-wrapper">
-            <span class="project-badge">2 Этажа</span>
-            <img src="assets/kompakt120.jpg" alt="Компакт - 120">
-          </div>
-          <div class="project-content">
-            <h3 class="project-title">Компакт - 120</h3>
-            <p style="font-size: 0.88rem; color: var(--color-gray-600); margin-bottom: 1rem;">Двухэтажный дом 120 м² — отличное решение для молодой и активной семьи.</p>
-            <div class="project-specs">
-              <span class="project-spec-item">📏 120 м²</span>
-              <span class="project-spec-item">🛏 3 Спальни</span>
-              <span class="project-spec-item">🛁 2 С/У</span>
-            </div>
-            <div class="project-footer">
-              <div>
-                <span class="project-price-label">Рассчитать стоимость</span>
-                <div class="project-price-val">от 3 050 000 ₽</div>
-              </div>
-              <button class="btn btn-outline-gold" data-modal="consultModal">Подробнее</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Project 5 -->
-        <div class="project-card" data-category="2story grand">
-          <div class="project-img-wrapper">
-            <span class="project-badge">2 Этажа</span>
-            <img src="assets/grand160.jpg" alt="Гранд-Формат - 160">
-          </div>
-          <div class="project-content">
-            <h3 class="project-title">Гранд-Формат - 160</h3>
-            <p style="font-size: 0.88rem; color: var(--color-gray-600); margin-bottom: 1rem;">Просторный двухэтажный дом создан для тех, кто любит принимать гостей.</p>
-            <div class="project-specs">
-              <span class="project-spec-item">📏 160 м²</span>
-              <span class="project-spec-item">🛏 4 Спальни</span>
-              <span class="project-spec-item">🛁 3 С/У</span>
-            </div>
-            <div class="project-footer">
-              <div>
-                <span class="project-price-label">Рассчитать стоимость</span>
-                <div class="project-price-val">от 4 085 000 ₽</div>
-              </div>
-              <button class="btn btn-outline-gold" data-modal="consultModal">Подробнее</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Project 6 -->
-        <div class="project-card" data-category="1story grand">
-          <div class="project-img-wrapper">
-            <span class="project-badge">1 Этаж</span>
-            <img src="assets/grand200.jpg" alt="Гранд-Формат - 200">
-          </div>
-          <div class="project-content">
-            <h3 class="project-title">Гранд-Формат - 200</h3>
-            <p style="font-size: 0.88rem; color: var(--color-gray-600); margin-bottom: 1rem;">Стильный одноэтажный дом 200 м² в современном стиле — премиальное решение.</p>
-            <div class="project-specs">
-              <span class="project-spec-item">📏 200 м²</span>
-              <span class="project-spec-item">🛏 4 Спальни</span>
-              <span class="project-spec-item">🛁 3 С/У</span>
-            </div>
-            <div class="project-footer">
-              <div>
-                <span class="project-price-label">Рассчитать стоимость</span>
-                <div class="project-price-val">от 5 085 000 ₽</div>
-              </div>
-              <button class="btn btn-outline-gold" data-modal="consultModal">Подробнее</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Project 7 -->
-        <div class="project-card" data-category="2story grand">
-          <div class="project-img-wrapper">
-            <span class="project-badge">2 Этажа</span>
-            <img src="assets/grand220.jpg" alt="Гранд-Формат - 220">
-          </div>
-          <div class="project-content">
-            <h3 class="project-title">Гранд-Формат - 220</h3>
-            <p style="font-size: 0.88rem; color: var(--color-gray-600); margin-bottom: 1rem;">Практичный двухэтажный дом 220 м² сочетает простор и рациональную планировку.</p>
-            <div class="project-specs">
-              <span class="project-spec-item">📏 220 м²</span>
-              <span class="project-spec-item">🛏 5 Спален</span>
-              <span class="project-spec-item">🛁 3 С/У</span>
-            </div>
-            <div class="project-footer">
-              <div>
-                <span class="project-price-label">Рассчитать стоимость</span>
-                <div class="project-price-val">от 5 660 000 ₽</div>
-              </div>
-              <button class="btn btn-outline-gold" data-modal="consultModal">Подробнее</button>
-            </div>
-          </div>
-        </div>
+        <button class="carousel-nav-btn next" id="projectsNextBtn" aria-label="Следующий проект">›</button>
       </div>
     </div>
   </section>
@@ -345,13 +373,13 @@
 
       <div class="stats-grid">
         <div class="stat-card">
-          <div class="stat-number">5+</div>
+          <div class="stat-number">15+</div>
           <div class="stat-divider"></div>
           <div class="stat-label">лет на рынке строительства частных домов</div>
         </div>
 
         <div class="stat-card">
-          <div class="stat-number">150+</div>
+          <div class="stat-number">450+</div>
           <div class="stat-divider"></div>
           <div class="stat-label">реализованных проектов и счастливых семей</div>
         </div>
@@ -363,7 +391,7 @@
         </div>
 
         <div class="stat-card">
-          <div class="stat-number">5 лет</div>
+          <div class="stat-number">3 года</div>
           <div class="stat-divider"></div>
           <div class="stat-label">гарантия на все конструктивные элементы</div>
         </div>

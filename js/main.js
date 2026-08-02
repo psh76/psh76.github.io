@@ -43,9 +43,38 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 3. Projects Catalog Filtering
+  // 3. Projects Catalog Carousel & Filtering
   const filterBtns = document.querySelectorAll('.filter-btn');
   const projectCards = document.querySelectorAll('.project-card');
+  const projectsGrid = document.getElementById('projectsGrid');
+  const projectsPrevBtn = document.getElementById('projectsPrevBtn');
+  const projectsNextBtn = document.getElementById('projectsNextBtn');
+
+  function updateCarouselArrows() {
+    if (!projectsGrid) return;
+    const maxScroll = projectsGrid.scrollWidth - projectsGrid.clientWidth;
+    if (projectsPrevBtn) projectsPrevBtn.disabled = projectsGrid.scrollLeft <= 5;
+    if (projectsNextBtn) projectsNextBtn.disabled = projectsGrid.scrollLeft >= maxScroll - 5;
+  }
+
+  if (projectsGrid) {
+    projectsGrid.addEventListener('scroll', updateCarouselArrows);
+    window.addEventListener('resize', updateCarouselArrows);
+  }
+
+  if (projectsPrevBtn && projectsGrid) {
+    projectsPrevBtn.addEventListener('click', () => {
+      const cardWidth = projectsGrid.querySelector('.project-card')?.offsetWidth || 340;
+      projectsGrid.scrollBy({ left: -(cardWidth + 28), behavior: 'smooth' });
+    });
+  }
+
+  if (projectsNextBtn && projectsGrid) {
+    projectsNextBtn.addEventListener('click', () => {
+      const cardWidth = projectsGrid.querySelector('.project-card')?.offsetWidth || 340;
+      projectsGrid.scrollBy({ left: cardWidth + 28, behavior: 'smooth' });
+    });
+  }
 
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -57,13 +86,21 @@ document.addEventListener('DOMContentLoaded', () => {
       projectCards.forEach(card => {
         const categories = (card.getAttribute('data-category') || '').split(' ');
         if (filterValue === 'all' || categories.includes(filterValue)) {
-          card.style.display = 'block';
+          card.style.display = 'flex';
         } else {
           card.style.display = 'none';
         }
       });
+
+      if (projectsGrid) {
+        projectsGrid.scrollTo({ left: 0, behavior: 'smooth' });
+        setTimeout(updateCarouselArrows, 300);
+      }
     });
   });
+
+  // Initial state check for carousel arrows
+  updateCarouselArrows();
 
   // 4. Modal Window Controls
   const modalOverlays = document.querySelectorAll('.modal-overlay');
