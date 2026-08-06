@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // Option selection handling
+  // Option selection handling with auto-advance
   document.querySelectorAll('.quiz-option').forEach(option => {
     option.addEventListener('click', function () {
       const parentStep = this.closest('.quiz-step');
@@ -196,6 +196,22 @@ document.addEventListener('DOMContentLoaded', () => {
       if (paramKey && paramVal) {
         quizState[paramKey] = paramVal;
       }
+
+      // Auto advance to next step or finish
+      setTimeout(() => {
+        if (currentStep < totalSteps) {
+          currentStep++;
+          updateQuizUI();
+        } else {
+          // Open Quiz Lead Submission Modal (marked as submitted from quiz flow)
+          const quizModal = document.getElementById('quizModal');
+          if (quizModal) {
+            quizModal.setAttribute('data-from-quiz', 'true');
+            quizModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+          }
+        }
+      }, 200);
     });
   });
 
@@ -365,4 +381,82 @@ document.addEventListener('DOMContentLoaded', () => {
       cookieBanner.style.display = 'none';
     });
   }
+
+  // 9. Phone Number Mask (+7 (XXX) XXX-XX-XX)
+  function initPhoneMasks() {
+    const phoneInputs = document.querySelectorAll('input[type="tel"]');
+
+    function getInputNumbersValue(input) {
+      return input.value.replace(/\D/g, '');
+    }
+
+    function onPhoneInput(e) {
+      let input = e.target;
+      let inputNumbersValue = getInputNumbersValue(input);
+      let formattedInputValue = "";
+      let selectionStart = input.selectionStart;
+
+      if (!inputNumbersValue) {
+        return input.value = "";
+      }
+
+      if (input.value.length !== selectionStart) {
+        if (e.data && /\D/g.test(e.data)) {
+          input.value = inputNumbersValue;
+        }
+        return;
+      }
+
+      if (["7", "8", "9"].indexOf(inputNumbersValue[0]) > -1) {
+        if (inputNumbersValue[0] === "9") inputNumbersValue = "7" + inputNumbersValue;
+        let firstSymbols = (inputNumbersValue[0] === "8") ? "8" : "+7";
+        formattedInputValue = firstSymbols + " ";
+
+        if (inputNumbersValue.length > 1) {
+          formattedInputValue += "(" + inputNumbersValue.substring(1, 4);
+        }
+        if (inputNumbersValue.length >= 5) {
+          formattedInputValue += ") " + inputNumbersValue.substring(4, 7);
+        }
+        if (inputNumbersValue.length >= 8) {
+          formattedInputValue += "-" + inputNumbersValue.substring(7, 9);
+        }
+        if (inputNumbersValue.length >= 10) {
+          formattedInputValue += "-" + inputNumbersValue.substring(9, 11);
+        }
+      } else {
+        formattedInputValue = "+" + inputNumbersValue.substring(0, 16);
+      }
+
+      input.value = formattedInputValue;
+    }
+
+    function onPhoneKeyDown(e) {
+      let input = e.target;
+      if (e.keyCode === 8 && getInputNumbersValue(input).length === 1) {
+        input.value = "";
+      }
+    }
+
+    function onPhonePaste(e) {
+      let input = e.target,
+        inputNumbersValue = getInputNumbersValue(input);
+      let pasted = e.clipboardData || window.clipboardData;
+      if (pasted) {
+        let pastedText = pasted.getData('Text');
+        if (/\D/g.test(pastedText)) {
+          input.value = inputNumbersValue;
+          return;
+        }
+      }
+    }
+
+    phoneInputs.forEach(input => {
+      input.addEventListener('input', onPhoneInput);
+      input.addEventListener('keydown', onPhoneKeyDown);
+      input.addEventListener('paste', onPhonePaste);
+    });
+  }
+
+  initPhoneMasks();
 });

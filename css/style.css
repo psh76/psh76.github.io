@@ -1137,8 +1137,14 @@ h1, h2, h3, h4, h5, h6 {
   align-items: flex-start;
   gap: 0.5rem;
   font-size: 0.8rem;
-  color: var(--color-gray-400);
-  margin-bottom: 1.5rem;
+  color: var(--color-gray-600);
+  margin-bottom: 0.65rem;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.checkbox-label:last-of-type {
+  margin-bottom: 1.25rem;
 }
 
 /* Modals */
