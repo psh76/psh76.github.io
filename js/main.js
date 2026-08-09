@@ -178,9 +178,9 @@ document.addEventListener('DOMContentLoaded', () => {
       'turnkey': 'Под ключ'
     },
     material: {
-      'gasblock': 'Газобетон',
-      'brick': 'Кирпич / Керамоблок',
-      'wood': 'Профилированный брус / Каркас'
+      'gasblock': 'Газоблок',
+      'brick': 'Кирпич',
+      'ceramic': 'Керамоблок'
     }
   };
 
@@ -277,7 +277,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const urlParams = new URLSearchParams(window.location.search);
   const trackingParams = {
     partner: urlParams.get('partner') || 'direct',
-    direction: urlParams.get('direction') || 'unknown',
     source: urlParams.get('source') || 'website'
   };
 
@@ -295,9 +294,12 @@ document.addEventListener('DOMContentLoaded', () => {
       const formData = new FormData(form);
       formData.append("access_key", WEB3FORMS_ACCESS_KEY);
 
+      // Delete consent & privacy checkboxes from payload so they aren't sent in email
+      formData.delete("consent");
+      formData.delete("privacy");
+
       // Append background tracking parameters
       formData.append("partner", trackingParams.partner);
-      formData.append("direction", trackingParams.direction);
       formData.append("source", trackingParams.source);
 
       // Append preferred messenger if present in active toggle (using Latin key to avoid email encoding corruption)
