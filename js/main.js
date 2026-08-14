@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // 3. Projects Catalog Carousel & Filtering
-  const filterBtns = document.querySelectorAll('.filter-btn');
+  const filterBtns = document.querySelectorAll('.project-filters .filter-btn');
   const projectCards = document.querySelectorAll('.project-card');
   const projectsGrid = document.getElementById('projectsGrid');
   const projectsPrevBtn = document.getElementById('projectsPrevBtn');
@@ -102,6 +102,64 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initial state check for carousel arrows
   updateCarouselArrows();
 
+  // 3.5 Works Showcase Carousel & Filtering
+  const workFilterBtns = document.querySelectorAll('.work-filters .filter-btn');
+  const workCards = document.querySelectorAll('.work-card');
+  const worksGrid = document.getElementById('worksGrid');
+  const worksPrevBtn = document.getElementById('worksPrevBtn');
+  const worksNextBtn = document.getElementById('worksNextBtn');
+
+  function updateWorksArrows() {
+    if (!worksGrid) return;
+    const maxScroll = worksGrid.scrollWidth - worksGrid.clientWidth;
+    if (worksPrevBtn) worksPrevBtn.disabled = worksGrid.scrollLeft <= 5;
+    if (worksNextBtn) worksNextBtn.disabled = worksGrid.scrollLeft >= maxScroll - 5;
+  }
+
+  if (worksGrid) {
+    worksGrid.addEventListener('scroll', updateWorksArrows);
+    window.addEventListener('resize', updateWorksArrows);
+  }
+
+  if (worksPrevBtn && worksGrid) {
+    worksPrevBtn.addEventListener('click', () => {
+      const cardWidth = worksGrid.querySelector('.work-card')?.offsetWidth || 340;
+      worksGrid.scrollBy({ left: -(cardWidth + 28), behavior: 'smooth' });
+    });
+  }
+
+  if (worksNextBtn && worksGrid) {
+    worksNextBtn.addEventListener('click', () => {
+      const cardWidth = worksGrid.querySelector('.work-card')?.offsetWidth || 340;
+      worksGrid.scrollBy({ left: cardWidth + 28, behavior: 'smooth' });
+    });
+  }
+
+  workFilterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      workFilterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const filterValue = btn.getAttribute('data-work-filter');
+
+      workCards.forEach(card => {
+        const category = card.getAttribute('data-work-category') || '';
+        if (filterValue === 'all' || category === filterValue) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      if (worksGrid) {
+        worksGrid.scrollTo({ left: 0, behavior: 'smooth' });
+        setTimeout(updateWorksArrows, 300);
+      }
+    });
+  });
+
+  updateWorksArrows();
+
   // 4. Modal Window Controls
   const modalOverlays = document.querySelectorAll('.modal-overlay');
   const modalTriggers = document.querySelectorAll('[data-modal]');
@@ -117,13 +175,13 @@ document.addEventListener('DOMContentLoaded', () => {
           // Triggered directly via Header or Hero button
           targetModal.setAttribute('data-from-quiz', 'false');
         } else if (modalId === 'consultModal') {
-          const projectCard = trigger.closest('.project-card');
-          if (projectCard) {
-            const title = projectCard.querySelector('.project-title')?.textContent?.trim() || '';
+          const card = trigger.closest('.project-card') || trigger.closest('.work-card');
+          if (card) {
+            const title = card.querySelector('.project-title')?.textContent?.trim() || card.querySelector('.work-title')?.textContent?.trim() || '';
             targetModal.setAttribute('data-project-name', title);
             const modalTitleEl = document.getElementById('consultModalTitle');
             if (modalTitleEl) {
-              modalTitleEl.textContent = title ? `Узнать больше о проекте "${title}"` : 'Узнать больше о проекте';
+              modalTitleEl.textContent = title ? `Узнать больше об объекте "${title}"` : 'Узнать больше о проекте';
             }
           }
         }
@@ -268,8 +326,11 @@ document.addEventListener('DOMContentLoaded', () => {
   radioToggles.forEach(toggle => {
     toggle.addEventListener('click', () => {
       const parent = toggle.closest('.radio-toggle-group');
+      const wasActive = toggle.classList.contains('active');
       parent.querySelectorAll('.radio-toggle').forEach(t => t.classList.remove('active'));
-      toggle.classList.add('active');
+      if (!wasActive) {
+        toggle.classList.add('active');
+      }
     });
   });
 
